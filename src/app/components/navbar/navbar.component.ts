@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { TextProcessService } from 'src/app/services/text-process.service';
+import { TextProcessService } from '@services/text-process.service';
 
 @Component({
     selector: 'app-navbar',

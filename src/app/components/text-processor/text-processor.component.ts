@@ -1,9 +1,10 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
-import { WordFrequency } from 'src/app/model/WordFrequency';
+import { WordFrequency } from '@model/WordFrequency';
+
 import { WordFrequencyAnalyzer } from 'src/app/interface/WordFrequencyAnalyzer';
-import { TextProcessService } from 'src/app/services/text-process.service';
+import { TextProcessService } from '@services/text-process.service';
 import { NgForm } from '@angular/forms';
 
 @Component({

@@ -3,6 +3,12 @@
   "compileOnSave": false,
   "compilerOptions": {
     "baseUrl": "./",
+    "paths": {
+      "@services/*": ["src/app/services/*"] ,
+      "@components/*": ["src/app/components/*"],
+      "@model/*": ["src/app/model/*"],
+      "@environment/*": ["src/environments/*"],
+    },
     "outDir": "./dist/out-tsc",
     "forceConsistentCasingInFileNames": true,
     "strict": true,
@@ -21,8 +27,6 @@
       "es2018",
       "dom"
     ],
-    "types" : ["canvasjs"],
-
   },
   "angularCompilerOptions": {
     "enableI18nLegacyMessageIdFormat": false,
