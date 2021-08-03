@@ -1,0 +1,15 @@
+<nav class="h-12 w-full sm:w-3/5 md:w-3/5 lg:w-3/5 flex flex-row sm:flex-row md:flex-row lg:flex-row items-center text-white justify-between px-4 md:pl-12 lg:pl-28 py-8">
+    <div class="w-1/2 lg:w-1/2 md:w-1/2 sm:w-1/2">
+        <h2 class="text-xl font-bold uppercase">Text Processor</h2>
+    </div>
+
+    <div class="w-1/2 lg:w-1/2 md:w-1/2 sm:w-1/2">
+        <h2 class="text-xl font-bold uppercase">
+            <p class="">
+                <span class="pr-2">Total Words</span>
+                <span *ngIf="!displayTotal" class="text-2xl">0</span>
+                <span *ngIf="displayTotal" class="text-2xl">{{displayTotal}}</span>
+            </p>
+        </h2>
+    </div>
+</nav>
