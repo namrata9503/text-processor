@@ -22,16 +22,18 @@
                                 <p class="text-gray-700 text-7xl font-bold">{{response1}}</p>
                             </div>
                         </div>
-
                     </div>
                     <div class="w-full md:w-3/5 lg:w-3/5 md:px-2 lg:px-2 mb-6">
                         <p class="text-base sm:text-base md:text-xs lg:text-sm text-white">Frequency of specific word</p>
                         <div class="flex flex-row sm:flex-row md:flex-row lg:flex-row h-40 sm:h-52 md:h-52 lg:h-52 px-4 py-4 items-center bg-white rounded-md border-t-4 border-blue-600">
-
-                            <div class="w-1/2 flex justify-center ">
+                            <div class="w-1/2 flex flex-col justify-center ">
                                 <mat-form-field>
-                                    <input matInput type="text" [(ngModel)]="specifiedWord" formControlName="specifiedWord" id="specifiedWordId" class="form-control p-4" style="color:black;" (keyup)="textProcessing()" placeholder="Enter Word.." />
+                                    <input matInput type="text" [(ngModel)]="specifiedWord" formControlName="specifiedWord" id="specifiedWordId" class="form-control p-4" pattern="^[a-zA-Z ]*$" [ngClass]="{ 'is-invalid': findError.specifiedWord.touched && findError.specifiedWord.errors }"
+                                        style="color:black;" (keyup)="textProcessing()" placeholder="Enter Word.." />
                                 </mat-form-field>
+                                <div *ngIf="findError.specifiedWord.touched && findError.specifiedWord.errors" class="invalid-feedback">
+                                    <div *ngIf=" findError.specifiedWord.errors" class="text-red-700"> Please Enter Alphabetic Word</div>
+                                </div>
                             </div>
                             <div class=" w-1/2 flex justify-center">
                                 <p class="text-gray-700 text-7xl font-bold">{{response2}}</p>
@@ -43,10 +45,14 @@
                 <div class="pb-6 ">
                     <p class="text-base sm:text-base md:text-xs lg:text-sm text-white">List of N frequent word</p>
                     <div class="flex flex-col sm:flex-col md:flex-col lg:flex-col h-auto sm:h-auto md:h-auto lg:h-auto px-4 py-4 items-center bg-white p-6 rounded-md border-t-4 border-blue-600">
-                        <div class="w-1/2 flex justify-center ">
+                        <div class="w-1/2 flex flex-col justify-center ">
                             <mat-form-field class="">
-                                <input matInput type="text" [(ngModel)]="mostFrequentN" formControlName="mostFrequentN" id="mostFrequentNId" class="form-control p-4 text-gray-700" style="color:black;" (keyup)="textProcessing()" placeholder="Enter Number.." />
+                                <input matInput type="text" [(ngModel)]="mostFrequentN" formControlName="mostFrequentN" id="mostFrequentNId" class="form-control p-4 text-gray-700" style="color:black;" pattern="^[+]?([0-9]+(?:[\.][0-9]*)?|\.[0-9]+)$" [ngClass]="{ 'is-invalid': findError.mostFrequentN.touched && findError.mostFrequentN.errors }"
+                                    (keyup)="textProcessing()" placeholder="Enter Number.." />
                             </mat-form-field>
+                            <div *ngIf="findError.mostFrequentN.touched && findError.mostFrequentN.errors" class="invalid-feedback">
+                                <div *ngIf=" findError.mostFrequentN.errors" class="text-red-700"> Please Enter Number</div>
+                            </div>
                         </div>
                         <!-- Paginator-->
                         <div class="pb-6">

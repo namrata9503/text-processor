@@ -145,7 +145,9 @@ export class TextProcessorComponent implements OnInit, WordFrequencyAnalyzer {
         }
         return wordsFrequency;
     }
-
+    get findError() {
+        return this.myForm.controls;
+    }
     resetForm() {
         this.myForm.reset();
         this.textProcessing();
