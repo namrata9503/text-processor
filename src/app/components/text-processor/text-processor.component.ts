@@ -1,11 +1,11 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { WordFrequency } from '@model/WordFrequency';
 
 import { WordFrequencyAnalyzer } from 'src/app/interface/WordFrequencyAnalyzer';
 import { TextProcessService } from '@services/text-process.service';
-import { NgForm } from '@angular/forms';
+import { FormControl, FormGroup } from '@angular/forms';
 
 @Component({
     selector: 'app-text-processor',
@@ -13,6 +13,12 @@ import { NgForm } from '@angular/forms';
     styleUrls: ['./text-processor.component.scss'],
 })
 export class TextProcessorComponent implements OnInit, WordFrequencyAnalyzer {
+
+    @Input() text = {
+        givenText: '',
+        specifiedWord: '',
+        mostFrequentN: '',
+    };
     givenText!: string;
     specifiedWord!: string;
     mostFrequentN!: number;
@@ -24,14 +30,21 @@ export class TextProcessorComponent implements OnInit, WordFrequencyAnalyzer {
 
     displayedColumns = ['word', 'frequency'];
     dataSource = new MatTableDataSource<WordFrequency>([]);
-    @ViewChild(NgForm) form!: NgForm;
+    //  @ViewChild(NgForm) myForm!: NgForm;
+    myForm!: FormGroup;
 
     @ViewChild(MatPaginator) paginator!: MatPaginator;
 
     constructor(private textProcessService: TextProcessService) {
     }
 
-    ngOnInit(): void {}
+    ngOnInit(): void {
+        this.myForm = new FormGroup({
+            givenText: new FormControl(),
+            specifiedWord: new FormControl(),
+            mostFrequentN: new FormControl(),
+        });
+    }
 
     processWordSeperate(): void {
         this.textProcessService.wordSeparator(this.givenText);
@@ -99,11 +112,11 @@ export class TextProcessorComponent implements OnInit, WordFrequencyAnalyzer {
         try {
             const sortedMap = new Map(Object.entries(this.sortedKeyValue));
             // validate if key exist
-            if (! this.specifiedWord || ! sortedMap.has(this.specifiedWord)) {
+            if (! this.specifiedWord || ! sortedMap.has(this.specifiedWord.toLowerCase())) {
                 frequencCountForGivenWord = 0;
 
             } else {
-                frequencCountForGivenWord = Number(sortedMap.get(this.specifiedWord));
+                frequencCountForGivenWord = Number(sortedMap.get(this.specifiedWord.toLowerCase()));
             }
 
         } catch (error) {
@@ -133,8 +146,8 @@ export class TextProcessorComponent implements OnInit, WordFrequencyAnalyzer {
         return wordsFrequency;
     }
 
-    resetForm(f: NgForm) {
-        f.reset();
+    resetForm() {
+        this.myForm.reset();
         this.textProcessing();
     }
 
