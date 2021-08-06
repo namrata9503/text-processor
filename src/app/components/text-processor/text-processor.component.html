@@ -1,12 +1,12 @@
-<section class="">
+<section>
     <form [formGroup]="myForm">
-        <div class="">
+        <div>
             <app-navbar></app-navbar>
         </div>
         <div class="w-full flex flex-col sm:flex-row md:flex-row lg:flex-row">
             <div class="flex flex-col sm:w-3/4 md:w-3/4 lg:w-3/5">
                 <div class="mx-4 md:ml-12 lg:ml-24">
-                    <textarea type="text" [(ngModel)]="givenText" formControlName="givenText" id="givenTextId" class="form-control w-full h-80v rounded-md p-4 border-t-4 border-blue-600  shadow-lg" (keyup)="textProcessing()" placeholder="Enter text..">
+                    <textarea type="text" id="givenTextId" [(ngModel)]="givenText" formControlName="givenText" class="form-control w-full h-80v rounded-md p-4 border-t-4 border-blue-600  shadow-lg" (keyup)="textProcessing()" placeholder="Enter text..">
                     </textarea>
                 </div>
                 <div class="my-6 mx-4 md:ml-12 lg:ml-24">
@@ -28,11 +28,11 @@
                         <div class="flex flex-row sm:flex-row md:flex-row lg:flex-row h-40 sm:h-52 md:h-52 lg:h-52 px-4 py-4 items-center bg-white rounded-md border-t-4 border-blue-600 shadow-xl">
                             <div class="w-1/2 flex flex-col justify-center ">
                                 <mat-form-field>
-                                    <input matInput type="text" [(ngModel)]="specifiedWord" formControlName="specifiedWord" id="specifiedWordId" class="form-control p-4" pattern="^[a-zA-Z ]*$" [ngClass]="{ 'is-invalid': findError.specifiedWord.touched && findError.specifiedWord.errors }"
-                                        style="color:black;" (keyup)="textProcessing()" placeholder="Enter Word.." />
+                                    <input matInput type="text" id="specifiedWordId" [(ngModel)]="specifiedWord" formControlName="specifiedWord" class="form-control p-4" pattern="^[a-zA-Z]*$" [ngClass]="{ 'is-invalid': findError.specifiedWord.touched && findError.specifiedWord.errors }"
+                                        style="color:black;" (keyup)="textProcessing()" placeholder="Enter Word.." autocomplete="off" />
                                 </mat-form-field>
                                 <div *ngIf="findError.specifiedWord.touched && findError.specifiedWord.errors" class="invalid-feedback">
-                                    <div *ngIf=" findError.specifiedWord.errors" class="text-red-700"> Please Enter Alphabetic Word</div>
+                                    <div *ngIf=" findError.specifiedWord.errors" class="text-red-600"> Please Enter Only Alphabetic Letters</div>
                                 </div>
                             </div>
                             <div class=" w-1/2 flex justify-center">
@@ -47,11 +47,11 @@
                     <div class="flex flex-col sm:flex-col md:flex-col lg:flex-col h-auto sm:h-auto md:h-auto lg:h-auto px-4 py-4 items-center bg-white p-6 rounded-md border-t-4 border-blue-600 shadow-xl">
                         <div class="w-1/2 flex flex-col justify-center ">
                             <mat-form-field class="">
-                                <input matInput type="text" [(ngModel)]="mostFrequentN" formControlName="mostFrequentN" id="mostFrequentNId" class="form-control p-4 text-gray-700" style="color:black;" pattern="^[+]?([0-9]+(?:[\.][0-9]*)?|\.[0-9]+)$" [ngClass]="{ 'is-invalid': findError.mostFrequentN.touched && findError.mostFrequentN.errors }"
-                                    (keyup)="textProcessing()" placeholder="Enter Number.." />
+                                <input matInput type="text" id="mostFrequentNId" [(ngModel)]="mostFrequentN" formControlName="mostFrequentN" class="form-control p-4 text-gray-700" style="color:black;" pattern="^[+]?([0-9]+(?:[\.][0-9]*)?|\.[0-9]+)$" [ngClass]="{ 'is-invalid': findError.mostFrequentN.touched && findError.mostFrequentN.errors }"
+                                    (keyup)="textProcessing()" placeholder="Enter Number.." autocomplete="off" />
                             </mat-form-field>
                             <div *ngIf="findError.mostFrequentN.touched && findError.mostFrequentN.errors" class="invalid-feedback">
-                                <div *ngIf=" findError.mostFrequentN.errors" class="text-red-700"> Please Enter Number</div>
+                                <div *ngIf=" findError.mostFrequentN.errors" class="text-red-600"> Please Enter Number</div>
                             </div>
                         </div>
                         <!-- Paginator-->
@@ -66,8 +66,8 @@
 
                                 <!-- frequency Column -->
                                 <ng-container matColumnDef="frequency">
-                                    <mat-header-cell *matHeaderCellDef> Word Frequency </mat-header-cell>
-                                    <mat-cell *matCellDef="let element"> {{element.frequency}} </mat-cell>
+                                    <mat-header-cell *matHeaderCellDef class="justify-center"> Word Frequency </mat-header-cell>
+                                    <mat-cell *matCellDef="let element" class="justify-center"> {{element.frequency}} </mat-cell>
                                 </ng-container>
 
                                 <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
