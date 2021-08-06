@@ -2,7 +2,6 @@ import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { WordFrequency } from '@model/WordFrequency';
-
 import { WordFrequencyAnalyzer } from 'src/app/interface/WordFrequencyAnalyzer';
 import { TextProcessService } from '@services/text-process.service';
 import { FormControl, FormGroup } from '@angular/forms';
@@ -54,7 +53,7 @@ export class TextProcessorComponent implements OnInit, WordFrequencyAnalyzer {
         // reset method
         this.textPreProcessor();
         this.response1 = this.calculateHighestFrequency();
-        this.response2 = this.calculateFrequencyForWord();
+        this.response2 = this.calculateFrequencyForWord(this.givenText, this.specifiedWord);
         this.response3 = this.calculateMostFrequentNWords(this.givenText, this.mostFrequentN);
         this.dataSource.data = this.response3;
         this.dataSource.paginator = this.paginator;
@@ -106,17 +105,17 @@ export class TextProcessorComponent implements OnInit, WordFrequencyAnalyzer {
         return highestFrequencCount;
     }
 
-    calculateFrequencyForWord(): number {
+    calculateFrequencyForWord(text: string, specifiedWord: string): number {
 
         let frequencCountForGivenWord = 0;
         try {
             const sortedMap = new Map(Object.entries(this.sortedKeyValue));
             // validate if key exist
-            if (! this.specifiedWord || ! sortedMap.has(this.specifiedWord.toLowerCase())) {
+            if (! specifiedWord || ! sortedMap.has(specifiedWord.toLowerCase())) {
                 frequencCountForGivenWord = 0;
 
             } else {
-                frequencCountForGivenWord = Number(sortedMap.get(this.specifiedWord.toLowerCase()));
+                frequencCountForGivenWord = Number(sortedMap.get(specifiedWord.toLowerCase()));
             }
 
         } catch (error) {
