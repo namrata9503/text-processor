@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { WordFrequency } from '@model/WordFrequency';
@@ -13,15 +13,9 @@ import { FormControl, FormGroup } from '@angular/forms';
 })
 export class TextProcessorComponent implements OnInit, WordFrequencyAnalyzer {
 
-    @Input() text = {
-        givenText: '',
-        specifiedWord: '',
-        mostFrequentN: '',
-    };
     givenText!: string;
     specifiedWord!: string;
     mostFrequentN!: number;
-    totalWordsAfterSeparator: number = 0;
     response1: number = 0;
     response2: number = 0;
     response3: WordFrequency[] = [];
@@ -29,7 +23,6 @@ export class TextProcessorComponent implements OnInit, WordFrequencyAnalyzer {
 
     displayedColumns = ['word', 'frequency'];
     dataSource = new MatTableDataSource<WordFrequency>([]);
-    //  @ViewChild(NgForm) myForm!: NgForm;
     myForm!: FormGroup;
 
     @ViewChild(MatPaginator) paginator!: MatPaginator;
@@ -50,16 +43,15 @@ export class TextProcessorComponent implements OnInit, WordFrequencyAnalyzer {
     }
 
     textProcessing(): void {
-        // reset method
         this.textPreProcessor();
         this.response1 = this.calculateHighestFrequency();
         this.response2 = this.calculateFrequencyForWord(this.givenText, this.specifiedWord);
         this.response3 = this.calculateMostFrequentNWords(this.givenText, this.mostFrequentN);
         this.dataSource.data = this.response3;
         this.dataSource.paginator = this.paginator;
-
     }
 
+    /* convert to map followed with descending order of frequency */
     sortedKeyValuePair(myArray: string[]): string[] {
         // convert to map
         const keyValue = myArray.reduce((acc: any, val: any) => {
@@ -67,8 +59,7 @@ export class TextProcessorComponent implements OnInit, WordFrequencyAnalyzer {
             return acc;
         }, {});
 
-        // convert to sorted keyValue pari; keys already sorted in array
-
+        // descending order of frequency
         return Object.keys(keyValue)
             .sort((a, b) => keyValue[b] - keyValue[a])
             .reduce((acc: any, cur) => {
@@ -77,11 +68,12 @@ export class TextProcessorComponent implements OnInit, WordFrequencyAnalyzer {
             }, {});
     }
 
+    /* process the text in such a way that calculating the all responses will be easy */
     textPreProcessor() {
         let myArray;
         try {
             myArray = this.textProcessService.wordSeparator(this.givenText);
-            this.totalWordsAfterSeparator = myArray.length;
+            this.textProcessService.totalNumberOfWords = myArray.length;
             this.sortedKeyValue = this.sortedKeyValuePair(myArray);
 
         } catch (error) {
@@ -89,22 +81,25 @@ export class TextProcessorComponent implements OnInit, WordFrequencyAnalyzer {
         }
 
     }
+
+    /* calculate highest frequency in given text */
     calculateHighestFrequency(): number {
-        let highestFrequencCount = 0;
+        let highestFrequentCount = 0;
 
         try {
-            if (this.totalWordsAfterSeparator > 0) {
+            if (this.textProcessService.totalNumberOfWords > 0) {
                 const sortedMap = new Map(Object.entries(this.sortedKeyValue));
 
-                highestFrequencCount = Number(sortedMap.get(Object.keys(this.sortedKeyValue)[0]));
+                highestFrequentCount = Number(sortedMap.get(Object.keys(this.sortedKeyValue)[0]));
             }
 
         } catch (error) {
             console.error('Operation failed due to ', error);
         }
-        return highestFrequencCount;
+        return highestFrequentCount;
     }
 
+    /* calculate frequency for specific word in given text */
     calculateFrequencyForWord(text: string, specifiedWord: string): number {
 
         let frequencCountForGivenWord = 0;
@@ -124,6 +119,7 @@ export class TextProcessorComponent implements OnInit, WordFrequencyAnalyzer {
         return frequencCountForGivenWord;
     }
 
+    /* calculate list of N frequent words in given text */
     calculateMostFrequentNWords(text: string, mostFrequentN: number): WordFrequency[] {
         const wordsFrequency: WordFrequency[] = [];
 

@@ -7,7 +7,7 @@ import { TextProcessService } from '@services/text-process.service';
     styleUrls: ['./navbar.component.scss'],
 })
 export class NavbarComponent implements OnInit {
-    totalNumberOfWords!: number;
+    // totalNumberOfWords!: number;
 
     constructor(private textProcessService: TextProcessService) { }
 
