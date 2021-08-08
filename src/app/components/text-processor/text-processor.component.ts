@@ -38,10 +38,6 @@ export class TextProcessorComponent implements OnInit, WordFrequencyAnalyzer {
         });
     }
 
-    processWordSeperate(): void {
-        this.textProcessService.wordSeparator(this.givenText);
-    }
-
     textProcessing(): void {
         this.textPreProcessor();
         this.response1 = this.calculateHighestFrequency();
@@ -53,7 +49,7 @@ export class TextProcessorComponent implements OnInit, WordFrequencyAnalyzer {
 
     /* convert to map followed with descending order of frequency */
     sortedKeyValuePair(myArray: string[]): string[] {
-        // convert to map
+        // convert to object
         const keyValue = myArray.reduce((acc: any, val: any) => {
             acc[val] = (acc[val] || 0) + 1;
             return acc;
@@ -106,10 +102,7 @@ export class TextProcessorComponent implements OnInit, WordFrequencyAnalyzer {
         try {
             const sortedMap = new Map(Object.entries(this.sortedKeyValue));
             // validate if key exist
-            if (! specifiedWord || ! sortedMap.has(specifiedWord.toLowerCase())) {
-                frequencCountForGivenWord = 0;
-
-            } else {
+            if (specifiedWord && sortedMap.has(specifiedWord.toLowerCase())) {
                 frequencCountForGivenWord = Number(sortedMap.get(specifiedWord.toLowerCase()));
             }
 
@@ -140,9 +133,13 @@ export class TextProcessorComponent implements OnInit, WordFrequencyAnalyzer {
         }
         return wordsFrequency;
     }
+
+    /* Validation error on UI side */
     get findError() {
         return this.myForm.controls;
     }
+
+    /* Reset the form and calculate updated response  */
     resetForm() {
         this.myForm.reset();
         this.textProcessing();

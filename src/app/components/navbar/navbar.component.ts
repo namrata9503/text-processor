@@ -7,12 +7,11 @@ import { TextProcessService } from '@services/text-process.service';
     styleUrls: ['./navbar.component.scss'],
 })
 export class NavbarComponent implements OnInit {
-    // totalNumberOfWords!: number;
-
     constructor(private textProcessService: TextProcessService) { }
 
     ngOnInit(): void {
     }
+    /* used to get total number of words from service */
     public get displayTotal(): number {
         return this.textProcessService.totalNumberOfWords;
     }

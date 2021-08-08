@@ -7,6 +7,7 @@ export class TextProcessService {
 
     totalNumberOfWords!: number;
 
+    /* this method filters alphabetcal letters , sort them in ascending order and convert it into lowercase  */
     wordSeparator(text: string): string[] {
         let words: string[] = [];
         if (! text) {

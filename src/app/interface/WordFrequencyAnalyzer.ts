@@ -1,4 +1,4 @@
-import { WordFrequency } from 'src/app/model/WordFrequency';
+import { WordFrequency } from '@model/WordFrequency';
 
 export interface WordFrequencyAnalyzer {
     calculateHighestFrequency(text: string): number;
