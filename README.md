@@ -1,6 +1,6 @@
 # Text-Processor App + Angular
 
-Project link: [Click here](https://text-processor-924fd.web.app/)
+Project link: [Click here](https://word-processor-68fe1.web.app/)
 
 This project is demonstrate how can text being processed with use of calculateHighestFrequency(), calculateFrequencyForWord() and calculateMostFrequentNWords() functions.
 
